@@ -1,30 +1,27 @@
 class Pokemon
 
-  @@all = []
+  attr_accessor :id, :name, :type, :db, :hp
 
-  attr_reader :id
-  attr_accessor :name, :type, :db
+  def initialize(keywords)
 
-  def initialize(id:, name:, type:, db:)
-    @id = id
-    @name = name
-    @type = type
-    @db = db
-    @@all << self
-  end
-
-  def self.all
-    @@all
   end
 
   def self.save(name, type, db)
-    db.execute("INSERT INTO pokemon(name, type) VALUES (?, ?);",name, type)
+    db.execute("INSERT INTO pokemon(name, type) VALUES (?, ?)",name, type)
   end
 
-  def self.find(id, db)
-    db.execute("SELECT * FROM pokemon WHERE id = (?);",id)
+  def self.find(new_id, db)
+    pokemon = db.execute("SELECT * FROM pokemon WHERE id = ?",new_id)
+    new_pokemon = self.new(pokemon)
+    new_pokemon.id = pokemon[0][0]
+    new_pokemon.name = pokemon[0][1]
+    new_pokemon.type = pokemon[0][2]
+    new_pokemon
+  end
 
-    error porque no existe. si no existe crear
+  def alter_hp(new_hp, db)
+    db.execute("UPDATE pokemon SET hp = ? WHERE id = ?",new_hp, self.id)
+    self.hp
   end
 
 end
