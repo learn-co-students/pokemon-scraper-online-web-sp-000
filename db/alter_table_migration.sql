@@ -1,0 +1,2 @@
+ALTER TABLE pokemon
+  ADD COLUMN hp DEFAULT 60;
