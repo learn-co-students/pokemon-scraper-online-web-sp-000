@@ -8,7 +8,7 @@ class Pokemon
     @name = name
     @type = type
     @id = id
-    @hp = nil
+    @hp = hp
     @db = db
   end
 
@@ -29,19 +29,18 @@ class Pokemon
     SQL
 
     result = db.execute(sql, id)[0]
+
     id = result[0]
     name = result[1]
     type = result[2]
     hp = result[3]
-# binding.pry
+
     pokemon = Pokemon.new(id: id, name: name, type: type, hp: hp, db: db)
+    pokemon
   end
 
   def alter_hp(hp, db)
     sql = "UPDATE pokemon SET hp = ? WHERE id = ?"
-    binding.pry
     db.execute(sql, hp, self.id)
-    # binding.pry
-    self.hp = hp
   end
 end
