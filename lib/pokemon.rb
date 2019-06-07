@@ -8,28 +8,28 @@ def initialize(id:nil,name:,type:, db:)
     @type = type
     @id = id
     @db = db
-    binding.pry
 end
 
-def self.save
-    binding.pry
-    if self.id
-      self.update
-    else
+def self.save(name, type, db)
       sql = <<-SQL
         INSERT INTO pokemon (name, type)
         VALUES (?, ?)
       SQL
-      binding.pry
-      @db.execute(sql, self.name, self.type)
-      @id = @db.execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
-    end
+      db.execute(sql, name, type)
+      @id = db.execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
 end
 
   def update
-    binding.pry
     sql = "UPDATE pokemon SET name = ?, type = ? WHERE id = ?"
     @db.execute(sql, self.name, self.type, self.id)
+  end
+
+  def self.find(id, db)
+    @id = id
+    sql = "SELECT * FROM pokemon WHERE id = ?"
+    result = db.execute(sql, id)[0]
+    binding.pry
+    Pokemon.save(result[1], result[2], db)
   end
 
 end
