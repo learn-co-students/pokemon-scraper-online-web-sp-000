@@ -3,7 +3,7 @@ require 'pry'
 class Pokemon
     attr_accessor :name, :type, :id, :db, :hp
 
-def initialize(id:nil,name:,type:, hp:nil, db:)
+def initialize(id:nil,name:,type:,hp:60, db:)
     @name = name
     @type = type
     @id = id
@@ -11,24 +11,21 @@ def initialize(id:nil,name:,type:, hp:nil, db:)
     @hp = hp
 end
 
-def self.save(name,type,db,hp)
-      sql = <<-SQL
-        INSERT INTO pokemon (name, type, hp)
-        VALUES (?, ?, ?)
-      SQL
-      db.execute(sql, name, type, hp)
-      @id = db.execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
+def self.save(name,type,db)
+      sql = "INSERT INTO pokemon (name, type) VALUES (?, ?)"
+      db.execute(sql, name, type)
+      #@id = db.execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
 end
 
-def alter_hp(hp)
+def alter_hp(hp,db)
   sql = "UPDATE pokemon SET hp = ? WHERE id = ?"
-  @db.execute(spl,hp)
+  db.execute(sql,hp,self.id)
 end
 
 def self.find(id, db)
   sql = "SELECT * FROM pokemon WHERE id = ?"
   result = db.execute(sql, id)[0]
-  Pokemon.new(id: id,name: result[1],type: result[2], db:db)
+  Pokemon.new(id: id,name: result[1],type: result[2], db:db, hp:result[3])
 end
 
   def update
