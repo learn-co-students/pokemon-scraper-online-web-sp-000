@@ -29,4 +29,15 @@ class Pokemon
     db_pokemon = db.execute(sql).flatten!
     self.new(id: db_pokemon[0], name: db_pokemon[1], type: db_pokemon[2], db: db, hp: db_pokemon[3])  
   end
+
+  def alter_hp(hp, db)
+    sql = <<-SQL
+      SELECT * FROM pokemon
+      WHERE id = + "#{self.id}"
+    SQL
+    binding.pry
+    @sql_runner.execute_alter_hp_constraint
+    db_pokemon = db.execute(sql).flatten!
+    
+  end
 end
