@@ -32,12 +32,13 @@ class Pokemon
 
   def alter_hp(hp, db)
     sql = <<-SQL
-      SELECT * FROM pokemon
-      WHERE id = + "#{self.id}"
+      UPDATE pokemon 
+      SET hp = ?
+      where id = ? 
     SQL
-    binding.pry
-    @sql_runner.execute_alter_hp_constraint
-    db_pokemon = db.execute(sql).flatten!
-    
+
+    db_pokemon = db.execute(sql, hp, self.id)
   end
+
+  
 end

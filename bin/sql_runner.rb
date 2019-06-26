@@ -14,12 +14,6 @@ class SQLRunner
     execute_sql(sql)
   end
 
-  def execute_alter_hp_constraint
-    binding.pry
-    sql = File.read('db/alter_hp_default_constraint.sql')
-    execute_sql(sql)
-  end
-
   def execute_sql(sql)
      sql.scan(/[^;]*;/m).each { |line| @db.execute(line) } unless sql.empty?
   end
