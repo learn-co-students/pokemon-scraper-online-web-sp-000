@@ -6,7 +6,7 @@ describe "schema_migration.sql" do
   end
 
   it "creates pokemon table" do
-    # .tables should include pokemon
+     #.tables should include pokemon
     expect(@db.execute("SELECT name FROM sqlite_master WHERE type IN ('table','view') AND name NOT LIKE 'sqlite_%' UNION ALL SELECT name FROM sqlite_temp_master WHERE type IN ('table','view') ORDER BY 1;")).to eq([["pokemon"]])
   end
 
