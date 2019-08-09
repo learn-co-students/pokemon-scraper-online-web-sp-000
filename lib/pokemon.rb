@@ -10,6 +10,7 @@ attr_accessor :id, :name, :type, :db
 # end
 
 def initialize(keywords)
+  binding.pry
 end
 
 def self.save(name, type, db)
