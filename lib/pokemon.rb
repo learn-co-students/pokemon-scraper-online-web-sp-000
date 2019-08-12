@@ -19,12 +19,6 @@ class Pokemon
     character.id = db.execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
   end
 
-  def self.create(name, type, db)
-    character = self.new(name:name, type:type, db:db)
-    self.save(name, type, db)
-    character
-  end
-
 
   def self.find(id, db)
     sql = <<-SQL
