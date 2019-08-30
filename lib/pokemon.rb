@@ -17,7 +17,7 @@ class Pokemon
       #update
     else
       sql = <<-SQL
-      INSERT INTO pokemon(name, type) VALUES(?,?);
+      INSERT INTO pokemon(name, type) VALUES(\"?\",\"?\");
       SQL
 
       @db.execute(sql, self.name, self.type)
