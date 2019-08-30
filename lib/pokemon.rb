@@ -15,10 +15,10 @@ class Pokemon
       #update
 
       sql = <<-SQL
-      SELECT * FROM pokemon WHERE name = ?;
+      SELECT * FROM pokemon WHERE name = ? AND type = ?;
       SQL
 
-      row = db.execute(sql, name)[0]
+      row = db.execute(sql, name, type)[0]
       pokemon = self.new(db)
       pokemon.id = row[0]
       pokemon.name = name
