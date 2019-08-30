@@ -20,7 +20,7 @@ class Pokemon
       SELECT * FROM pokemon WHERE name = ?;
       SQL
 
-      row = db.execute(sql, name, type)[0]
+      row = db.execute(sql, name)[0]
       self.new(row[1],row[2],row[0],db)
 
 
