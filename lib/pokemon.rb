@@ -12,7 +12,7 @@ class Pokemon
 
   end
 
-  def self.save(name, type, id=nil)
+  def self.save(name, type, db)
     if @id
       #update
     else
@@ -20,7 +20,10 @@ class Pokemon
       INSERT INTO pokemon(name, type) VALUES(?,?);
       SQL
 
-      @db.execute(sql, self.name, self.type)
+      row = db.execute(sql, name, type)[0]
+      self.new(row[1],row[2],row[0],db)
+
+
     end
 
   end
