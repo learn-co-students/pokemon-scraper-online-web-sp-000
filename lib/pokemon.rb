@@ -13,7 +13,7 @@ class Pokemon
   end
 
   def self.save(name, type, db)
-    if @id
+
       #update
 
       sql = <<-SQL
@@ -24,7 +24,7 @@ class Pokemon
       self.new(row[1],row[2],row[0],db)
 
 
-    end
+    
 
   end
 
