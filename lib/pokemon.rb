@@ -2,7 +2,7 @@ class Pokemon
   attr_accessor :name, :type, :db
   attr_reader :id
 
-  def initialize(db)
+  def initialize(db, db1, db2, db3)
 
 
 
@@ -20,7 +20,7 @@ class Pokemon
 
       row = db.execute(sql, name, type)[0]
       pokemon = self.new(db)
-      pokemon.id = row[0]
+      pokemon.id = row
       pokemon.name = name
       pokemon.type = type
       pokemon
