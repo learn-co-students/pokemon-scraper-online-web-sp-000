@@ -2,22 +2,22 @@ class Pokemon
   attr_accessor :name, :type, :db
   attr_reader :id
 
-  def initialize(db)
+  def initialize(name, type, id)
 
 
     @name = name
     @type = type
     @id = id
-    @db = db
+    #@db = db
 
   end
 
-  def self.save(name, type, id)
+  def self.save(name, type, id=nil)
     if @id
       #update
     else
       sql = <<-SQL
-      INSERT INTO pokemon(name, type) VALUES(\"?\",\"?\");
+      INSERT INTO pokemon(name, type) VALUES(?,?);
       SQL
 
       @db.execute(sql, self.name, self.type)
