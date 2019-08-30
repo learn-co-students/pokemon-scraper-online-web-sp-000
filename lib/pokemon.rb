@@ -5,10 +5,8 @@ class Pokemon
   def initialize(db)
 
 
-    #@name = name
-    #@type = type
-    #@id = id
-    @db = db
+
+    #@db = db
 
   end
 
@@ -21,7 +19,11 @@ class Pokemon
       SQL
 
       row = db.execute(sql, name)[0]
-      #self.new(row)
+      pokemon = self.new(db)
+      pokemon.id = row[0]
+      pokemon.name = name
+      pokemon.type = type
+      pokemon
 
 
 
