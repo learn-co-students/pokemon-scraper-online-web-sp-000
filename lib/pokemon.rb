@@ -15,7 +15,7 @@ class Pokemon
   def self.save(name, type, db)
     if @id
       #update
-    else
+    
       sql = <<-SQL
       INSERT INTO pokemon(name, type) VALUES(?,?);
       SQL
