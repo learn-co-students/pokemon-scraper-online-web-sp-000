@@ -2,13 +2,13 @@ class Pokemon
   attr_accessor :name, :type, :db
   attr_reader :id
 
-  def initialize(db)
+  def initialize(id)
 
 
     @name = name
     @type = type
     @id = id
-    @db = db
+
   end
 
   def self.save(name, type, db)
@@ -19,7 +19,7 @@ class Pokemon
       INSERT INTO pokemon(name, type) VALUES(?,?);
       SQL
 
-      @db.execute(sql, self.name, self.type)
+      @db.execute(sql, self.name, self.type, self.db)
     end
 
   end
