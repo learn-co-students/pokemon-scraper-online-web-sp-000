@@ -3,13 +3,7 @@ class Pokemon
   attr_reader :id
 
   def initialize(name)
-    =begin
-
-    @name = name
-    @type = type
-    @id = id
-    @db = db
-    =end
+    
   end
 
   def self.save(name, type, db)
