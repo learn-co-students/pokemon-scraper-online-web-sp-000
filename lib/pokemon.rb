@@ -19,7 +19,7 @@ class Pokemon
       INSERT INTO pokemon(name, type) VALUES(?,?);
       SQL
 
-      DB[:conn].execute(sql, self.name, self.type)
+      @db.execute(sql, self.name, self.type)
     end
 
   end
