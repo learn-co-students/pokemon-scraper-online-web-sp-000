@@ -1,39 +1,25 @@
 class Pokemon
-  attr_accessor :name, :type, :db
-  attr_reader :id
+  attr_accessor :id, :name, :type, :db
+  #attr_reader
 
-  def initialize(db, db1, db2, db3)
+  def initialize(hash)
 
-
-
-    #@db = db
+    #fix. make hash because keyword arguments are actually passed as a single hash
+    puts hash
+    @id = hash[:id]
+    @name = hash[:name]
+    @type = hash[:type]
+    @db = hash[:db]
 
   end
 
   def self.save(name, type, db)
-
-      #update
-
-      sql = <<-SQL
-      SELECT * FROM pokemon WHERE name = ? AND type = ?;
-      SQL
-
-      row = db.execute(sql, name, type)[0]
-      pokemon = self.new(db)
-      pokemon.id = row
-      pokemon.name = name
-      pokemon.type = type
-      pokemon
-
-
-
-
+    db.execute("INSERT INTO pokemon (name, type) VALUES (?, ?)", name, type)
   end
 
-  def self.find(id)
-    sql = "SELECT * FROM pokemon WHERE id = ?;"
-    row = DB[:conn].execute(sql, id)[0]
-    self.new(row[1])
+  def self.find(id, db)
+    pokemon_info = db.execute("SELECT * FROM pokemon WHERE id=?", id).flatten
+    Pokemon.new(id: pokemon_info[0], name: pokemon_info[1], type: pokemon_info[2], hp: pokemon_info[3], db: db)
   end
 
 end
