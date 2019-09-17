@@ -1,21 +1,27 @@
 class Pokemon
   
-  attr_accessor :name, :type
-  attr_reader :id 
+  attr_accessor :name, :type, :db
+  attr_reader :id
   
-  def initialize(id:, name:, type:, db:)
+  def initialize(id:nil, name:, type:, db:)
     @id = id
     @name = name
     @type = type
     @db = db
   end
   
-  def self.save
-    
+  def self.save(name, type, db)
+    db.execute("INSERT INTO pokemon (name, type) VALUES (?, ?);", name, type)
   end
   
-  def self.find 
-    
+  def self.find(id, db)
+    result = db.execute("SELECT * FROM pokemon WHERE id = ?;", id).flatten
+    Pokemon.new(id: result[0], name: result[1], type: result[2], db: db)
+  end
+  
+  def update
+    sql = "UPDATE pokemon SET name = ?, type = ? WHERE id = ?"
+    DB[:conn].execute(sql, self.name, self.type, self.id)
   end
   
 end
