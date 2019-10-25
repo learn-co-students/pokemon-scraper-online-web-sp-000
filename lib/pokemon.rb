@@ -1,3 +1,5 @@
+require_relative '../lib/scraper.rb'
+
 class Pokemon
   attr_accessor :id, :name, :type, :db
   
@@ -8,17 +10,17 @@ class Pokemon
     @db = db
   end
   
-  def self.save(name:, type:, db:)
-    pokemon = Pokemon.new(id: nil, name:, type:, db:)
-    sql = "INSERT INTO pokemon (name, type, db) VALUES (?, ?, ?)"
-    DB[:conn].execute(sql, pokemon.name, pokemon.type, pokemon.db)
-    @id = DB[:conn].execute("SELECT last_insert_rowid() FROM songs")[0][0]
+  def self.save(name, type, db)
+    pokemon = Pokemon.new(id: nil, name: name, type: type, db: db)
+    sql = "INSERT INTO pokemon (name, type) VALUES (?, ?)"
+    db.execute(sql, pokemon.name, pokemon.type)
+    pokemon.id = db.execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
   end
   
-  def self.find(id)
+  def self.find(id, db)
     sql = "SELECT*FROM pokemon WHERE id = ?"
-    result = DB[:conn].execute(sql, id)[0]
-    Pokemon.new(result[0], result[1], result[2], self.db)
+    result = db.execute(sql, id)[0]
+    Pokemon.new(id: result[0], name: result[1], type: result[2], db: db)
     
   end
   
