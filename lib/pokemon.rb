@@ -1,29 +1,31 @@
+require 'pry'
 class Pokemon
-  attr_accessor :name, :type, :db
+  attr_accessor :name, :type, :db, :hp
   attr_reader :id
 
-  def initialize(id:, name:, type:, db:)
+  def initialize(id:, name:, type:, hp: nil, db:)
     @id = id
     @name = name
     @type = type
+    @hp = hp
     @db = db
   end
 
   def self.save(name, type, db)
     sql = <<-SQL
-    INSERT INTO pokemon (name, type, db)
-    VALUES (?, ?, ?)
+    INSERT INTO pokemon (name, type)
+    VALUES (?, ?)
     SQL
-    result = DB[:conn].execute(sql, name, type, db)
-    @id = result.DB[:conn].execute("SELECT last_inserted_rowid() FROM pokemon")[0][0]
+    db.execute(sql, name, type)
+    # @id = db.execute("SELECT last_inserted_rowid() FROM pokemon")[0][0]
   end
 
-  def self.find(id)
+  def self.find(id, db)
     sql = <<-SQL
     SELECT * FROM pokemon WHERE id = ?
     SQL
-    row = DB[:conn].execute(sql, id)
-    new_pokemon = Pokemon.new(row[0], row[1], row[2], row[3])
+    row = db.execute(sql, id).flatten
+    new_pokemon = Pokemon.new(id: row[0], name: row[1], type:row[2], hp: row[3], db: db)
     new_pokemon
   end
 end
