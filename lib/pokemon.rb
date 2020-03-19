@@ -1,4 +1,6 @@
 class Pokemon
+  require 'pry'
+  attr_accessor :name, :type, :db, :id
   
 def initialize(id: nil, name:, type:, db:)
  @id = id
@@ -7,5 +9,29 @@ def initialize(id: nil, name:, type:, db:)
   @db = db
 end
 
-
+  def self.save(name, type, db)
+    sql = <<-SQL
+      INSERT INTO pokemon (name, type)
+      VALUES (?, ?)
+    SQL
+ 
+    db.execute(sql, name, type)
+    @id = db.execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
+  end
+  
+  def self.find(id, db)
+    sql = <<-SQL
+      SELECT *
+      FROM pokemon
+      WHERE id = ?
+      LIMIT 1
+    SQL
+ 
+    db.execute(sql, id).map do |row|
+      id = row[0]
+      name = row[1]
+      type = row[2]
+      self.new(name, type, db)
+    end
+  end
 end
