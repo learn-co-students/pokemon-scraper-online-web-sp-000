@@ -19,7 +19,7 @@ end
     @id = db.execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
   end
   
-  def self.find(id, db)
+  def self.find(id_num, db)
     sql = <<-SQL
       SELECT *
       FROM pokemon
@@ -27,11 +27,7 @@ end
       LIMIT 1
     SQL
  
-    db.execute(sql, id).map do |row|
-      id = row[0]
-      name = row[1]
-      type = row[2]
-      self.new(name, type, db)
+   info = db.execute(sql, id_num).flatten
+      Pokemon.new(id: info[0],name: info[1],type: info[2], db: db)
     end
-  end
 end
