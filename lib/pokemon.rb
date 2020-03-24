@@ -2,15 +2,17 @@
 
 class Pokemon
   #responsible for removing, adding, saving, or changing about each pokemon
-  attr_accessor :name, :type, :db, :hp
-  attr_reader :id
+  attr_accessor :name, :type, :db, :id
+  #attr_reader :id
+  @@all = []
 
-  def initialize(id:, name:, type:, hp:, db:)
-    @db = db
-    @id = id
-    @name = name
-    @type = type
-    @hp = hp
+  def initialize(id:, name:, type:, db:)
+    #above uses keywords
+    #@db = db
+    #@id = id
+    #@name = name
+    #@type = type
+    @@all << self
   end
 
   def self.save(name, type, db)
@@ -21,7 +23,6 @@ class Pokemon
           SQL
 
           db.execute(sql, name, type)
-
   end
 
   def self.find(id, db)
@@ -29,24 +30,24 @@ class Pokemon
       # return a new instance of the Pokemon class
         sql = <<-SQL
           SELECT *
-          FROM pokemons
+          FROM pokemon
           WHERE id = ?
           LIMIT 1
         SQL
 
         pokemon = db.execute(sql, id)
-        id = pokemon[0]
-        name = pokemon[1]
-        type = pokemon[2]
-        hp = pokemon[3]
-        db = pokemon[4]
-        Pokemon.new(id,name,type,hp,db)
+        new_pokemon = Pokemon.new(pokemon)
+        new_pokemon.id = pokemon[0][0]
+        new_pokemon.name = pokemon[0][1]
+        new_pokemon.type = pokemon[0][2]
+
+        return new_pokemon
     end
 
   def self.create_table
     #below is a HEREDOC
     sql = <<-SQL
-    CREATE TABLE IF NOT EXISTS pokemons (
+    CREATE TABLE IF NOT EXISTS pokemon (
       id INTEGER PRIMARY KEY,
       name TEXT,
       type TEXT
@@ -58,19 +59,19 @@ class Pokemon
 
   def self.drop_table
       sql= <<-SQL
-      DROP TABLE students
+      DROP TABLE pokemon
       SQL
       DB[:conn].execute(sql) #execute SQL statement on database table
   end
 
   def self.create(name, type)
-      pokemon = Pokemon.new(name, type)
+      pokemon = Pokemon.new(id, name, type)
       pokemon.save
       pokemon
   end
 
   def update
-      sql = "UPDATE students SET name = ?, type = ? WHERE id = ?"
+      sql = "UPDATE pokemon SET name = ?, type = ? WHERE id = ?"
       DB[:conn].execute(sql, self.name, self.type, self.id)
   end
 
