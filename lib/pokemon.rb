@@ -3,10 +3,7 @@ class Pokemon
   attr_accessor :id, :name, :type, :db
 
   def initialize(id: nil, name:, type:, db:)
-    @id = id
-    @name = name
-    @type = type
-    @db = db
+    @id, @name, @type, @db = id, name, type, db
   end
 
   def self.save(name, type, db)
@@ -16,7 +13,6 @@ class Pokemon
     SQL
 
     db.execute(sql, name, type)
-    @id = db.execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
   end
 
   def self.new_from_db(row)
