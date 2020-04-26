@@ -11,24 +11,26 @@ class Pokemon
 
     def self.create_table
         sql = <<-SQL
-            CREATE TABLE IF NOT EXISTS pokemons (
+            CREATE TABLE IF NOT EXISTS pokemon (
                 id INTEGER PRIMARY KEY,
                 name TEXT,
                 type TEXT
             )
         SQL
-        DB[:conn].execute(sql) 
+        DB.execute(sql) 
     end
 
     def self.save(name, type, db)
-        # if self.id
-        #     self.update
-        # else 
-            sql = <<-SQL
-                INSERT INTO pokemon (name, type)
-                VALUES (?, ?)
-            SQL
-            db.execute(sql, name, type)
-        #end
+        sql = <<-SQL
+            INSERT INTO pokemon (name, type)
+            VALUES (?, ?)
+        SQL
+        db.execute(sql, name, type)
+    end
+
+    def self.find(id, db)
+        sql = "SELECT * FROM pokemon WHERE id = ?"
+        row = db.execute(sql, id)
+        Pokemon.new(id: row[0][0], name: row[0][1], type: row[0][2], db: db)
     end
 end
