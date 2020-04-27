@@ -13,14 +13,17 @@ class Scraper
   end
 
   def get_pokemon_name_from(node)
+    #extracts name info
     node.css(".ent-name").text
   end
 
   def get_pokemon_type_from(node)
+    #extracts type info
     node.css(".itype").text
   end
 
   def scrape
+    #scrapes all of the info from the website and saves a Pokemon with that name and that type 
     all_pokemon.each do |pk_node|
       pk_name = get_pokemon_name_from(pk_node)
       pk_type = get_pokemon_type_from(pk_node)
