@@ -27,15 +27,6 @@ class Pokemon
     #end
   end
 
-  def update
-    sql = <<-SQL
-      UPDATE pokemon
-      SET name = ?, type = ?
-      WHERE id = ?
-    SQL
-    @db.execute(sql, self.name, self.type, self.id)
-  end
-
   def self.find(id_num, db)
     #sql = <<-SQL
     #  SELECT *
