@@ -16,13 +16,7 @@ class Pokemon
     end
 
     def self.find(id, db)
-        sql = <<-SQL
-            SELECT *
-            FROM pokemon 
-            WHERE id = ? 
-        SQL
-
-        found_pokemon = DB[:conn].execute(sql, id)
+        found_pokemon = db.execute("SELECT * FROM pokemon WHERE id = ?;", id).flatten
         Pokemon.new(id: found_pokemon[0], name: found_pokemon[1], type: found_pokemon[2], db: db)
     end
 
