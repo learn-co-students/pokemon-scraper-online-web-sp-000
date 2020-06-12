@@ -2,7 +2,7 @@ class Pokemon
     attr_accessor :name, :type, :db
     attr_reader :id
 
-    def initialize(name:, type:, db:, id:nil)
+    def initialize(name:, type:, db:, id:)
         @name = name
         @type = type
         @db = db
@@ -15,7 +15,7 @@ class Pokemon
         VALUES (?, ?)
         SQL
 
-        DB[:conn].execute(sql, self.name, self.type, self.db)
-        @id = DB[:conn].execute("SELECT last insertrow() FROM pokemon")[0][0]
+        db.execute(sql, self.name, self.type)
+        # @id = DB[:conn].execute("SELECT last insertrow() FROM pokemon")[0][0]
     end
 end
