@@ -10,16 +10,23 @@ class Pokemon
   end
 
   def self.save(name, type, db)
-    binding.pry
     sql = <<-SQL
       INSERT INTO pokemon (name, type) 
       VALUES (?, ?)
     SQL
-    DB[:conn].execute(sql, name, type)
+    db.execute(sql, name, type)
   end
 
   def self.find(id, db)
-    sql = 
+    sql = <<-SQL
+      SELECT name, type from pokemon WHERE id = ?
+    SQL
+    result = db.execute(sql, id)[0]
+    hash = {}
+    hash[:id] = id
+    hash[:name] = result[0]
+    hash[:type] = result[1]
+    Pokemon.new(hash)
   end
 
 end
