@@ -32,9 +32,9 @@ class Pokemon
             id = row[0]
             name = row[1]
             type = row[2]
-            poke = self.new(name: name, type: type, db: db, id: num)
-            poke
+            self.new(name: name, type: type, db: db, id: num)
             # binding.pry
-        end
+        end.first
+        
     end
 end
