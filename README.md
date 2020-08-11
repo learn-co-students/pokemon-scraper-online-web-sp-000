@@ -9,7 +9,7 @@
 ### Overview
 
 In this lab, you will:
-
+##
 1. Set up your schema
 2. Scrape data
 3. Insert it into your database
