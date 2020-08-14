@@ -10,11 +10,14 @@ class Pokemon
   
   def self.save(name, type, db)
     pokemon = self.new(name: name, type: type, db: db)
-    binding.pry
     sql = <<-SQL 
-      INSERT INTO pokemon VALUES (name, type)
-      
+      INSERT INTO pokemon (name, type)
+      VALUES (?, ?)
     SQL
+    
+    DB[:conn].execute(sql, pokemon.name, pokemon.type)
+    DB[:conn].execute("SELECT ")
+    binding.pry
   end 
   
 end 
