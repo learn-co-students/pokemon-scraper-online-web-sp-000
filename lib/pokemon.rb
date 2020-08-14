@@ -16,7 +16,7 @@ class Pokemon
     SQL
     
     DB[:conn].execute(sql, poke.name, poke.type)
-    poke.id = @db[:conn].execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
+    poke.id = DB[:conn].execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
   end 
   
   def self.find(id, db)
