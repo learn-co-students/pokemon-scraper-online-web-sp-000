@@ -16,7 +16,7 @@ class Pokemon
     SQL
     
     DB[:conn].execute(sql, pokemon.name, pokemon.type)
-    DB[:conn].execute("SELECT ")
+    DB[:conn].execute("SELECT last_insert_rowid() ")
     binding.pry
   end 
   
