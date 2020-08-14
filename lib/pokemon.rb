@@ -9,14 +9,14 @@ class Pokemon
   end 
   
   def self.save(name, type, db)
-    pokemon = self.new(name: name, type: type, db: db)
+    poke = self.new(name: name, type: type, db: db)
     sql = <<-SQL 
       INSERT INTO pokemon (name, type)
       VALUES (?, ?)
     SQL
     
-    DB[:conn].execute(sql, pokemon.name, pokemon.type)
-    pokemon.id = DB[:conn].execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
+    DB[:conn].execute(sql, poke.name, poke.type)
+    poke.id = DB[:conn].execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
     binding.pry
   end 
   
