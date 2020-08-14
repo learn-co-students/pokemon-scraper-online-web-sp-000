@@ -12,7 +12,8 @@ class Pokemon
     pokemon = self.new(name: name, type: type, db: db)
     binding.pry
     sql = <<-SQL 
-      INSERT IN
+      INSERT INTO pokemon VALUES (name, type)
+      
     SQL
   end 
   
