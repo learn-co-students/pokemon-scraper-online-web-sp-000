@@ -23,6 +23,7 @@ class Pokemon
     sql = <<-SQL
       SELECT * FROM pokemon 
       WHILE id = ?
+      LIMIT 1
     SQL
     
     DB[:conn].execute(sql, id) 
