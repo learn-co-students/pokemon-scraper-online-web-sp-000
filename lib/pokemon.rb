@@ -15,8 +15,17 @@ class Pokemon
       VALUES (?, ?)
     SQL
     
-    DB[:conn].execute(sql, poke.name, poke.type)
-    poke.id = DB[:conn].execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
+    @db[:conn].execute(sql, poke.name, poke.type)
+    poke.id = @db[:conn].execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
+  end 
+  
+  def self.find(id, db)
+    sql = <<-SQL
+      SELECT * FROM pokemon 
+      WHILE id = ?
+    SQL
+    
+    @db[:conn].execute(sql, id) 
   end 
   
 end 
