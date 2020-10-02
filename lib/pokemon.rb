@@ -1,3 +1,4 @@
+require 'pry'
 class Pokemon
     attr_accessor :name, :type
     attr_reader :id, :db
@@ -27,11 +28,22 @@ class Pokemon
         #@id = db.execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
     end
 
-    def self.find_all
-    end
+    def self.new_from_db(row)
+        id = row[0]
+        name = row[1]
+        type = row[2]
+        db = row[3]
+        self.new(id, name, type, db)
+        #self.new(row[0], row[1], row[2])
+      end
 
     def self.find(id, db)
-        db.execute("SELECT * FROM pokemon WHERE id = ? LIMIT 1")
-        #self.new(id: default, name: default, type: default, db: default)
+        sql = "SELECT * FROM pokemon WHERE id = ?"
+        result = db.execute(sql, id)[0]
+        binding.pry
+        Pokemon.new(id: id, name: result[1], type: result[2], db: db)
     end
 end
+
+        #db.execute("SELECT * FROM pokemon WHERE id = ?)
+        #self.new(id: default, name: default, type: default, db: default)
