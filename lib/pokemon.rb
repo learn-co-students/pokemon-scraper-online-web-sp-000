@@ -23,6 +23,5 @@ class Pokemon
     sql = "SELECT * FROM pokemon WHERE id = ?"
     pokemon = db.execute(sql, id)[0]
     Pokemon.new(id: pokemon[0], name: pokemon[1], type: pokemon[2], db: db)
-    binding.pry
   end
 end
