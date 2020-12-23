@@ -8,12 +8,12 @@ class SQLRunner
     execute_sql(sql)
   end
 
-  def execute_create_hp_column
-    sql = File.read('db/alter_table_migration.sql')
-    execute_sql(sql)
-  end
-
   def execute_sql(sql)
      sql.scan(/[^;]*;/m).each { |line| @db.execute(line) } unless sql.empty?
+  end
+
+  def execute_create_hp_column
+    sql = File.read('db/add_hp_column_to_pokemon_table.sql')
+    execute_sql(sql)
   end
 end
