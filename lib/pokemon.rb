@@ -22,7 +22,7 @@ class Pokemon
         name = pkmn[1]
         type = pkmn[2]
   
-        pokemon_inst = Pokemon.new(id: id, name: name, type: type, db: db)
+        pokemon_inst = self.new(id: id, name: name, type: type, db: db)
     end
   
  
