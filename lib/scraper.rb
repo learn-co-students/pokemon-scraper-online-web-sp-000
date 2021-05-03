@@ -25,6 +25,7 @@ class Scraper
       pk_name = get_pokemon_name_from(pk_node)
       pk_type = get_pokemon_type_from(pk_node)
       Pokemon.save(pk_name, pk_type, db)
+      # @all << pk
     end
   end
 
